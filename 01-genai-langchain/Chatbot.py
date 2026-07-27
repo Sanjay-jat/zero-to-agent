@@ -14,14 +14,16 @@ history=[
 ]
 
 while True:
-    user_input = input("You: ")
-    history.append(HumanMessage(content=user_input))
+    user_input = input("You: ").strip()
 
     if user_input.lower() == "exit":
         break
 
+    history.append(HumanMessage(content=user_input))
+
+    
     answer = chain.invoke(history)
     history.append(AIMessage(content=answer))
-    print("AI:", answer)
+    print(f"AI: {answer}")
 
-print(history)
+print(f"\nAI: {history}\n")

@@ -8,4 +8,4 @@ A structured log of my AI/ML learning — LangChain, RAG, Agentic AI, and the pr
 - [ ] Deep Learning
 
 ## About
-Documenting my journey topic by topic — each folder has its own README with what I learned, key concepts, and code.
+Documenting my journey topic by topic 
