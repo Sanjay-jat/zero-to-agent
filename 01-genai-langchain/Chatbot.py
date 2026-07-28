@@ -1,29 +1,54 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.messages import AIMessage,HumanMessage,SystemMessage
-from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
+
+from langchain.messages import (
+    AIMessage,
+    HumanMessage,
+    SystemMessage,
+)
+from langchain_core.output_parsers import StrOutputParser
+from langchain_google_genai import ChatGoogleGenerativeAI
+
 load_dotenv()
 
+MODEL_NAME = "gemini-3.6-flash"
 
-model = ChatGoogleGenerativeAI(model="gemini-3.5-flash")
+model = ChatGoogleGenerativeAI(model=MODEL_NAME)
+
 parser = StrOutputParser()
 
 chain = model | parser
-history=[
-    SystemMessage(content="You are a helpful assistant."),
+# Conversation history
+history = [
+    SystemMessage(
+        content="You are a helpful AI assistant."
+    )
 ]
+
 
 while True:
     user_input = input("You: ").strip()
 
     if user_input.lower() == "exit":
+        print("\nGoodbye! 👋")
         break
 
-    history.append(HumanMessage(content=user_input))
+    if not user_input:
+        continue
 
-    
-    answer = chain.invoke(history)
-    history.append(AIMessage(content=answer))
-    print(f"AI: {answer}")
+    history.append(
+        HumanMessage(content=user_input)
+    )
 
-print(f"\nAI: {history}\n")
+    response = chain.invoke(history)
+
+    history.append(
+        AIMessage(content=response)
+    )
+
+    print(f"\nAI: {response}\n")
+
+
+print("\nConversation History:\n")
+
+for message in history:
+    print(message)
