@@ -6,7 +6,7 @@ from typing import TypedDict,Annotated
 
 load_dotenv()
 
-model = ChatGoogleGenerativeAI(model="gemini-3.5-flash")
+model = ChatGoogleGenerativeAI(model="gemini-3.6-flash")
 
 class review(TypedDict):
     summary:Annotated[str,"A brief summary on topic"]
