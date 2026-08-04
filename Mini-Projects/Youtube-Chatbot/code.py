@@ -103,3 +103,23 @@ response = llm.invoke(final_prompt)
 
 print("\nAnswer:\n")
 print(response.content[0]["text"])
+
+
+## using chains 
+# from langchain_core.runnables import RunnableParallel,RunnablePassthrough,RunnableLambda,RunnableSequence
+
+# def format_docs(docs):
+#     context_text = "\n\n".join(doc.page_content for doc in docs)
+#     return context_text
+
+# parallel_chain=RunnableParallel({
+#     'context':retriever|RunnableLambda(format_docs),
+#     'question':RunnablePassthrough()
+# })
+# print(parallel_chain.invoke('what is generative AI?'))
+
+# parser=StrOutParser()
+
+# main_chain=parallel_chain|prompt|llm|parser
+
+# main_chain.invoke('what is generative AI?')
