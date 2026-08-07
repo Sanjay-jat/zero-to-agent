@@ -4,6 +4,8 @@ from langchain.agents import create_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.tools import DuckDuckGoSearchRun
 import requests
+import os
+API_KEY = os.getenv("API_KEY")
 
 load_dotenv()
 
@@ -18,7 +20,7 @@ def weather_tool(city:str)->str:
     """
     Get the current weather for a given city.
     """
-    url = f"https://api.weatherstack.com/current?access_key=a9d6fbd617049f914546996f5819814b&query={city}"
+    url = f"https://api.weatherstack.com/current?access_key={API_KEY}&query={city}"
     response = requests.get(url)
     return response.json()
 
