@@ -1,8 +1,9 @@
 from dotenv import load_dotenv
-
+from langchain_core.tools import tool
 from langchain.agents import create_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.tools import DuckDuckGoSearchRun
+import requests
 
 load_dotenv()
 
@@ -12,10 +13,18 @@ llm = ChatGoogleGenerativeAI(
 )
 
 search_tool = DuckDuckGoSearchRun()
+@tool
+def weather_tool(city:str)->str:
+    """
+    Get the current weather for a given city.
+    """
+    url = f"https://api.weatherstack.com/current?access_key=a9d6fbd617049f914546996f5819814b&query={city}"
+    response = requests.get(url)
+    return response.json()
 
 agent = create_agent(
     model=llm,
-    tools=[search_tool],
+    tools=[search_tool, weather_tool],
 )
 
 response = agent.invoke(
@@ -23,7 +32,7 @@ response = agent.invoke(
         "messages": [
             {
                 "role": "user",
-                "content": "3 ways to reach Goa from Rajasthan"
+                "content": "capital of Rajasthan and the current weather there"
             }
         ]
     }
