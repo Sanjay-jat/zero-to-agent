@@ -73,4 +73,4 @@ llm_result = llm_max.invoke(messages)  # → now it answers for real
 print(llm_result.content[0]["text"])
 ```
  
-Next logical step: stop doing this loop by hand and let an **agent** manage it. 🤖
+Next logical step: stop doing this loop by hand and let an **agent** manage it 🤖
