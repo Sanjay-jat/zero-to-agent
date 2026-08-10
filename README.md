@@ -8,4 +8,4 @@ A structured log of my AI/ML learning — LangChain, RAG, Agentic AI, and the pr
 - [ ] Deep Learning
 
 ## About
-Documenting my journey topic by topic 
+Documenting my journey 
