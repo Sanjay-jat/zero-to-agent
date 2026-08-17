@@ -20,6 +20,8 @@ llm = ChatOllama(
     temperature=0,
     base_url="http://172.31.0.1:11434"
 )
+#thread_id='1'
+#config1={'configurable':{'thread_id':thread_id}}
 
 class Chat(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]
