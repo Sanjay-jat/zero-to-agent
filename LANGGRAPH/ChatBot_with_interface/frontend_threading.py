@@ -1,12 +1,43 @@
 import streamlit as st
 from backend import chatbot
 from langchain_core.messages import SystemMessage,HumanMessage,AIMessage
-thread_id='1'
-config1={'configurable':{'thread_id':thread_id}}
+import uuid
+
+
+def generate_thread_id():
+    thread_id=uuid.uuid4()
+    return thread_id
+def reset_chat():
+    st.session_state['thread_id'] = generate_thread_id()
+    add_thread_id(st.session_state['thread_id'])
+    st.session_state["messages"] = []
+def add_thread_id(thread_id):
+    if thread_id not in st.session_state['chat_threads']:
+        st.session_state['chat_threads'].append(thread_id)
+    
 st.title("ChatBot")
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
+if 'thread_id' not in st.session_state:
+    st.session_state['thread_id'] = generate_thread_id()
+if 'chat_threads' not in st.session_state:
+    st.session_state['chat_threads'] = []
+
+st.sidebar.title("LangGraph ChatBot")
+
+if st.sidebar.button('new chat'):
+    reset_chat()
+
+st.sidebar.header('My conversations')
+
+for thread_id in st.session_state['chat_threads']:
+    st.sidebar.text(thread_id)
+
+
+
+
+
 
 
 
@@ -27,7 +58,7 @@ if user_input:
         ai_message=st.write_stream(
             message_chunk.content for message_chunk,metadata in chatbot.stream(
                 {"messages": [HumanMessage(content=user_input)]},
-                config=config1,
+                config={'configurable':{'thread_id':st.session_state['thread_id']}},
                 stream_mode="messages"
             )
         ) 
