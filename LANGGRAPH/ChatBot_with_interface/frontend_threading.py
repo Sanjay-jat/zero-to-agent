@@ -14,7 +14,11 @@ def reset_chat():
 def add_thread_id(thread_id):
     if thread_id not in st.session_state['chat_threads']:
         st.session_state['chat_threads'].append(thread_id)
-    
+def load_convo(thread_id):
+    state = chatbot.get_state(config={'configurable': {'thread_id': thread_id}})
+    values = getattr(state, 'values', {}) or {}
+    return values.get('messages', [])
+
 st.title("ChatBot")
 
 if "messages" not in st.session_state:
@@ -32,8 +36,18 @@ if st.sidebar.button('new chat'):
 st.sidebar.header('My conversations')
 
 for thread_id in st.session_state['chat_threads']:
-    st.sidebar.text(thread_id)
+    if st.sidebar.button(str(thread_id)):
+        st.session_state['thread_id'] = thread_id
+        message= load_convo(thread_id)
 
+        temp_messages=[]
+        for msg in message:
+            if isinstance(msg,HumanMessage):
+                role='user'
+            else:
+                role='assistant'
+            temp_messages.append({"role":role,"content":msg.content})
+        st.session_state["messages"] = temp_messages
 
 
 
