@@ -67,7 +67,8 @@ if user_input:
         'configurable':{'thread_id':st.session_state['thread_id']},
         "metadata":{
             "thread_id":st.session_state['thread_id']
-        }
+        },
+        "run_name":"chat_run"
     }
 
     with st.chat_message("assistant"):
