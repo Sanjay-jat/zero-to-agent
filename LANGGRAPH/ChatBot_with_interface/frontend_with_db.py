@@ -72,12 +72,20 @@ if user_input:
     }
 
     with st.chat_message("assistant"):
-        ai_message=st.write_stream(
-            message_chunk.content for message_chunk,metadata in chatbot.stream(
+        def ai_only_stream():
+            for message_chunk, metadata in chatbot.stream(
                 {"messages": [HumanMessage(content=user_input)]},
                 config=Config,
                 stream_mode="messages"
-            )
-        ) 
-    st.session_state["messages"].append({"role":"assistant","content":ai_message})
+            ):
+                if isinstance(message_chunk, AIMessage):
+                    # yield only assistant tokens
+                    yield message_chunk.content
+
+        ai_message = st.write_stream(ai_only_stream())
+
+    st.session_state['messages'].append({
+        'role': 'assistant',
+        'content': ai_message
+    })
     
