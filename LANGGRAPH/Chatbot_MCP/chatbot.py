@@ -65,9 +65,9 @@ async def build_graph():
     return chatbot
 
 
-# async def main():
-#     chatbot=await build_graph()
-#     result=await chatbot.ainvoke({"messages":[SystemMessage(content="You are a helpful assistant."),HumanMessage(content="heyy my name is sanjay can you multiply 300 with 40 and then add 1000 to the ans you can use the tool and i you use them pls tell me ")]})
-#     print(result['messages'][-1].content)
-# if __name__=='__main__':
-#     asyncio.run(main())
+async def main():
+    chatbot=await build_graph()
+    result=await chatbot.ainvoke({"messages":[SystemMessage(content="You are a helpful assistant."),HumanMessage(content="heyy my name is sanjay can you multiply 300 with 40 and then add 1000 to the ans you can use the tool and i you use them pls tell me ")]})
+    print(result['messages'][-1].content)
+if __name__=='__main__':
+    asyncio.run(main())
