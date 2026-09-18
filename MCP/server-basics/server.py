@@ -20,7 +20,10 @@ async def get_user_info(name: str) -> str:
     """Get info about a specific user by name."""
     return f"User profile for {name}: this is a placeholder user record." 
 
-
+@mcp.prompt()
+async def math_explainer(number: str) -> str:
+    """Generate a prompt asking to explain a number's properties."""
+    return f"Explain the mathematical properties of the number {number} in simple terms."
 
 if __name__=="__main__":
     mcp.run()
