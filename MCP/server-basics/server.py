@@ -15,6 +15,11 @@ async def get_greeting() -> str:
     """A simple static greeting resource."""
     return "Hello from the MCP server. This is a resource, not a tool."
 
+@mcp.resource("user://{name}")
+async def get_user_info(name: str) -> str:
+    """Get info about a specific user by name."""
+    return f"User profile for {name}: this is a placeholder user record." 
+
 
 
 if __name__=="__main__":
