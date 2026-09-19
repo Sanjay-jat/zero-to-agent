@@ -27,6 +27,7 @@ async def main():
         {"messages": [{"role": "user", "content": "Answer using tools you have  What is 25 multiplied by 15?"}]}
     )
 
-    
+    for msg in result["messages"]:
+            print(msg)
 
 asyncio.run(main())
